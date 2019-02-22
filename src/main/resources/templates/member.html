@@ -8,9 +8,16 @@
 <body>
 <div class="content-wrapper" layout:fragment="content_body">
     <span class="helloworld">hello member </span>
-    <form method="post">
-        이름 : <input type="text" name="username">
-        비밀번호 : <input type="password" name="password">
+    <form method="post" th:object="${member}">
+        이름 : <input type="text" name="username" th:field="*{username}">
+        <span : th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+
+        <br>
+
+        비밀번호 : <input type="password" name="password" th:field="*{password}">
+        <span : th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+
+        <br>
         <input type="submit">
     </form>
 
