@@ -1,7 +1,9 @@
 package com.doohong.board.controller;
 
 import com.doohong.board.domain.Member;
+import com.doohong.board.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,11 +21,14 @@ import java.util.List;
 public class MemberController {
 
     List<Member> memberList = new ArrayList<>();
+
+    @Autowired
+    MemberService memberService;
     //member
     @GetMapping
     public String index(Model model){
 
-        model.addAttribute("list",memberList);
+        model.addAttribute("list",memberService.findAll());
         model.addAttribute("member",new Member());
         return "member";
 
@@ -37,7 +42,7 @@ public class MemberController {
             model.addAttribute("member",member);
             return "member";
         }
-        memberList.add(member);
+        memberService.save(member);
         return "redirect:/member";
     }
 }
