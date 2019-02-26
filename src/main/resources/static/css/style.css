@@ -4,3 +4,6 @@ h1{
 li{
     display :inline;
 }
+li.active a{
+    color : red;
+}

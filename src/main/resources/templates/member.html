@@ -5,28 +5,42 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 
-<body>
-<div class="content-wrapper" layout:fragment="content_body">
-    <span class="helloworld">hello member </span>
-    <form method="post" th:object="${member}">
-        이름 : <input type="text" name="username" th:field="*{username}">
-        <span : th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+    <head>
+        <style>
+            li.active a{
+                color : red;
+            }
+        </style>
 
-        <br>
+    </head>
+    <body>
+        <div class="content-wrapper" layout:fragment="content_body">
+            <span class="helloworld">hello member </span>
+            <form method="post" th:object="${member}">
+                이름 : <input type="text" name="username" th:field="*{username}">
+                <span : th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
 
-        비밀번호 : <input type="password" name="password" th:field="*{password}">
-        <span : th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                <br>
 
-        <br>
-        <input type="submit">
-    </form>
+                비밀번호 : <input type="password" name="password" th:field="*{password}">
+                <span : th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
 
-    <hr>
-    <div th:each="member : ${list}">
-        유저 이름 : <span th:text="${member.username}"></span></br>
-        비밀번호 : <span th:text="${member.password}"></span>
-    </div>
+                <br>
+                <input type="submit">
+            </form>
 
-</div>
-</body>
+            <hr>
+
+            <th:block th:if="${pageinfo !=null}">
+                <div th:each="member : ${pageinfo.content}">
+                    유저 이름 : <span th:text="${member.username}"></span></br>
+                    비밀번호 : <span th:text="${member.password}"></span>
+                </div>
+                <hr>
+                <ul th:replace="~{common/pagination :: pagination('/member')}"></ul>
+            </th:block>
+
+
+        </div>
+    </body>
 </html>
